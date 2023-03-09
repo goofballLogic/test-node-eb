@@ -1,8 +1,8 @@
 const http = require("http");
 const hostname = "localhost";
-const port = 5000;
+console.log(process.env);
 const server = http.createServer((req, res) => {
     res.statusCode = 200;
     res.end("<html><body><h1>Hello, World!</h1></body></html>");
 })
-server.listen(port, hostname);
+server.listen(process.env.PORT || 5000, hostname);
