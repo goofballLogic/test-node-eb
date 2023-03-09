@@ -17,6 +17,11 @@ jobs:
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
 
+    - name: Declare sha_short
+      id: vars
+      shell: bash
+      run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v21
       with:
@@ -25,4 +30,5 @@ jobs:
         application_name: test
         environment_name: Test-env
         region: us-east-1
+        version_label: ${{ steps.vars.sha_short }}
         deployment_package: deploy.zip
